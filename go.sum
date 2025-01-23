@@ -1,0 +1,4 @@
+github.com/dswarbrick/smart v0.0.0-20230625164221-6fe037e2b05f h1:ma4Mjvr6TZgnXBOxvJz9wLb7tyhyZjIlmJEH1VjYmco=
+github.com/dswarbrick/smart v0.0.0-20230625164221-6fe037e2b05f/go.mod h1:KtomanZLCIyvU1AoVYIGAhxSlSJNxF1A3u+1bt7pCpI=
+golang.org/x/sys v0.29.0 h1:TPYlXGxvx1MGTn2GiZDhnjPA9wZzZeGKHHmKhHYvgaU=
+golang.org/x/sys v0.29.0/go.mod h1:/VUhepiaJMQUp4+oa/7Zr1D23ma6VTLIYjOOTFZPUcA=
