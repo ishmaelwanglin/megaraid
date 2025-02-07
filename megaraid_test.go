@@ -444,3 +444,18 @@ func TestCtrlInfo(t *testing.T) {
 	}
 	fmt.Println(string(jsonData))
 }
+
+func TestVPD(t *testing.T) {
+	// 修正后的有效示例数据
+	data := []byte{
+		0, 131, 0, 32, 1, 3, 0, 8, 80, 2, 83, 143, 195,
+		18, 7, 79, 97, 147, 0, 8, 80, 14, 0, 74, 170, 170,
+		170, 15, 1, 20, 0, 4, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
+
+	page := ParseVpdPage83Jbod(data)
+
+	fmt.Println(page)
+
+}
