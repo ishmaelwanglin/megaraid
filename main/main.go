@@ -26,9 +26,9 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
-		fmt.Printf("%s\n", strings.Repeat("-", 160))
-		fmt.Printf("%-10s%-10s%-20s%-20s%-20s%-20s%-10s%-10s%-20s%-20s\n", "Eid:Slt", "DID", "MediaType", "Size", "Serial", "Product", "Vendor", "FwState", "State", "Properties")
-		fmt.Printf("%s\n", strings.Repeat("-", 160))
+		fmt.Printf("%s\n", strings.Repeat("-", 180))
+		fmt.Printf("%-10s%-10s%-20s%-20s%-20s%-20s%-10s%-10s%-20s%-20s%-20s\n", "Eid:Slt", "DID", "MediaType", "Size", "Serial", "Product", "Vendor", "FwState", "State", "Properties", "SasAddr")
+		fmt.Printf("%s\n", strings.Repeat("-", 180))
 		for _, v := range devices {
 			if !v.IsScsiDev() {
 				continue
@@ -47,12 +47,17 @@ func main() {
 				continue
 			}
 
-			fmt.Printf("%-10s%-10d%-20s%-20s%-20s%-20s%-10s%-10s%-20b%-20b\n", fmt.Sprintf("%d:%d", pdInfo.EnclDeviceId, pdInfo.SlotNumber),
+			addr, err := megaraid.PdSasAddr(v.SasAddr[:2], 2)
+			if err != nil {
+				continue
+			}
+			fmt.Printf("%-10s%-10d%-20s%-20s%-20s%-20s%-10s%-10s%-20b%-20b%-20v\n", fmt.Sprintf("%d:%d", pdInfo.EnclDeviceId, pdInfo.SlotNumber),
 				pdInfo.Ref.DeviceId, pdInfo.GetMediaType(),
 				pdInfo.GetSize(), inq.SerialNumber, inq.ProductIdentification, inq.VendorIdentification, pdInfo.GetFwState(),
-				pdInfo.State.PdType, pdInfo.Properties.Bits)
+				pdInfo.State.PdType, pdInfo.Properties.Bits, addr)
+
 		}
-		fmt.Printf("%s\n", strings.Repeat("-", 160))
+		fmt.Printf("%s\n", strings.Repeat("-", 180))
 
 		fmt.Printf("\n\n")
 		ldList, err := m.MegasasGetLdList(&instance)
