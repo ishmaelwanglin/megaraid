@@ -43,33 +43,32 @@ func SizeString(sectors uint64) string {
 	return fmt.Sprintf("%.2f kB", math.Round(k*100)/100)
 }
 
-func SasAddrParse(input []uint32) uint64 {
-	if len(input) < 2 {
-		panic("Input array must have at least two uint32 values to fit into one uint64.")
-	}
-
-	// 将低 32 位和高 32 位合并为一个 uint64
-	low := uint64(input[0])      // 低 32 位
-	high := uint64(input[1])     // 高 32 位
-	result := (high << 32) | low // 拼接高位和低位
-
-	return result
-}
-
 type Uint interface {
 	~uint32 | ~uint64 | ~uint16 | ~uint8
 }
 
+// zip 2 uint64
 func ArrayZip[T Uint](arr []T, offset uint) uint64 {
 	n := len(arr)
 	if n < 1 {
 		panic("input array length must be greate than 1")
 	}
+	var (
+		va uint64
+	)
 
-	low := uint64(arr[0])
-	high := uint64(arr[1])
+	for i := range n {
+		if arr[i] == 0 {
+			continue
+		}
+		if va == 0 {
+			va = uint64(arr[i])
+		} else {
+			va = (uint64(arr[i]) << offset) | va
+		}
+	}
 
-	return (high << offset) | low // 拼接高位和低位
+	return va
 }
 
 // jbod的naa正确，raid的需要再看

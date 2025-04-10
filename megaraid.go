@@ -7,7 +7,6 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"strconv"
 	"strings"
 	"unsafe"
 
@@ -233,11 +232,4 @@ func (m *MegasasIoctl) MegasasGetCtrlInfo(instance *Instance) *megasas_ctrl_info
 	binary.Read(bytes.NewBuffer(instance.Buf), binary.LittleEndian, &data)
 
 	return &data
-}
-
-func PdSasAddr(array []uint32, n uint8) (string, error) {
-	if n != 2 {
-		return "", fmt.Errorf("n must be 2")
-	}
-	return fmt.Sprintf("0x%s", strconv.FormatUint(uint64(array[1])<<32|uint64(array[0]), 16)), nil
 }

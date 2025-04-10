@@ -36,7 +36,7 @@ func TestMegasasGetPdList(t *testing.T) {
 	fmt.Printf("%-10s%-10s%-10s%-10s%-10s%-10s%-30s\n", "DID", "EID", "EIndex", "Slot", "DevType", "Port", "SasAddr")
 	for _, v := range devices {
 
-		fmt.Printf("%-10d%-10d%-10d%-10d%-10d%-10d%-30d\n", v.DeviceId, v.EnclosureId, v.EnclosureIndex, v.SlotNumber, v.ScsiDevType, v.ConnectPortBitmap, SasAddrParse(v.SasAddr[:]))
+		fmt.Printf("%-10d%-10d%-10d%-10d%-10d%-10d%-30s\n", v.DeviceId, v.EnclosureId, v.EnclosureIndex, v.SlotNumber, v.ScsiDevType, v.ConnectPortBitmap, v.GetSasAddrs())
 	}
 	/*
 		DID       EID       EIndex    Slot      DevType   Port      SasAddr

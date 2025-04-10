@@ -3,6 +3,7 @@ package megaraid
 import (
 	"bytes"
 	"fmt"
+	"strconv"
 	"strings"
 )
 
@@ -551,7 +552,10 @@ func (a *MR_PD_ADDRESS) IsScsiDev() bool {
 }
 
 func (a *MR_PD_ADDRESS) GetSasAddr() uint64 {
-	return SasAddrParse(a.SasAddr[:])
+	return ArrayZip(a.SasAddr[:], 32)
+}
+func (a *MR_PD_ADDRESS) GetSasAddrs() string {
+	return fmt.Sprintf("0x%s", strconv.FormatUint(a.GetSasAddr(), 16))
 }
 
 // Holder for megaraid_sas ioctl device
